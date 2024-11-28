@@ -1,3 +1,5 @@
 order_id,buyer_name,order_date,items_purchased,total_cost,shipping_status,sales_price,deletion_date
 2,Pending,2024-11-28,Polo sirts,12,Pending,12,2024-11-28
 4,Pending,2024-11-28,Polo sirts,12,Pending,12,2024-11-28
+1,Pending,2024-11-28,Polo sirts,12,Delivered,212,2024-11-28
+3,Pending,2024-11-28,Polo sirts,12,Delivered,12,2024-11-28
