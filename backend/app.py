@@ -229,12 +229,32 @@ def manage_single_order(order_id):
 
     if request.method == 'PUT':
         updated_order = request.json
-        # Preserve the order_id when updating
+        # Preserve order_id
         updated_order['order_id'] = order_id
+        # If order_date is not provided, keep the original
+        if 'order_date' not in updated_order:
+            updated_order['order_date'] = order['order_date']
+            
+        # Update financial records if cost or sales price changed
+        if (float(updated_order['total_cost']) != float(order['total_cost']) or 
+            float(updated_order['sales_price']) != float(order['sales_price'])):
+            financial_data = read_csv(FINANCIAL_FILE)
+            # Find and update corresponding financial record
+            for record in financial_data:
+                if record['order_id'] == order_id:
+                    profit = float(updated_order['sales_price']) - float(updated_order['total_cost'])
+                    fees = float(updated_order['total_cost']) * 0.1  # 10% fees
+                    record['profit'] = str(profit)
+                    record['fees'] = str(fees)
+                    record['total_sales'] = updated_order['sales_price']
+                    break
+            write_csv(FINANCIAL_FILE, financial_data, FINANCIAL_FIELDS)
+        
+        # Update orders list
         orders = [updated_order if o['order_id'] == order_id else o for o in orders]
-        write_csv(ORDERS_FILE, orders, ORDER_FIELDS)  # Use predefined fields
+        write_csv(ORDERS_FILE, orders, ORDER_FIELDS)
         return jsonify(updated_order)
-    
+        
     elif request.method == 'DELETE':
         # Save the order to deleted_orders before removing it
         deleted_orders = read_csv(DELETED_ORDERS_FILE)
@@ -274,16 +294,24 @@ def manage_deleted_order(order_id):
         return jsonify({'message': 'Order permanently deleted'})
     
     elif request.method == 'POST':
-        # Recover order
-        order.pop('deletion_date', None)  # Remove deletion_date field
+        # Create a copy of the order to avoid modifying the original
+        recovered_order = order.copy()
+        # Remove only the deletion_date field
+        recovered_order.pop('deletion_date', None)
+        
+        # Get current orders and append the recovered order
         orders = read_csv(ORDERS_FILE)
-        orders.append(order)
+        orders.append(recovered_order)
         write_csv(ORDERS_FILE, orders, ORDER_FIELDS)
         
         # Remove from deleted orders
         deleted_orders = [o for o in deleted_orders if o['order_id'] != order_id]
         write_csv(DELETED_ORDERS_FILE, deleted_orders, ORDER_FIELDS + ['deletion_date'])
-        return jsonify({'message': 'Order recovered successfully'})
+        
+        return jsonify({
+            'message': 'Order recovered successfully',
+            'recovered_order': recovered_order
+        })
 
 # Profit and Expense Tracking
 @app.route('/financial', methods=['GET', 'POST'])
