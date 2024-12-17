@@ -3,3 +3,6 @@ order_id,buyer_name,order_date,items_purchased,total_cost,shipping_status,sales_
 4,Pending,2024-11-28,Polo sirts,12,Pending,12,2024-11-28
 1,Pending,2024-11-28,Polo sirts,12,Delivered,212,2024-11-28
 3,Pending,2024-11-28,Polo sirts,12,Delivered,12,2024-11-28
+5,Pending,2024-11-28,Polo sirts,12,Pending,12,2024-12-05
+6,Pending,2024-11-28,Polo sirts,12,Pending,12,2024-12-05
+10,Direct Sale,2024-12-05,Tommy Hilfiger Denim Jacket ,14,Pending,30,2024-12-06

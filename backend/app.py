@@ -390,5 +390,72 @@ def remove_background():
 def serve_image(folder, filename):
     return send_from_directory(f'static/images/{folder}', filename)
 
+from urllib.parse import unquote
+
+@app.route('/inventory/sell/<path:item_name>', methods=['POST', 'OPTIONS'])
+def process_sale(item_name):
+    if request.method == 'OPTIONS':
+        return '', 204
+        
+    try:
+        # Decode the URL-encoded item name
+        decoded_item_name = unquote(item_name)
+        sale_data = request.json
+        inventory = read_csv(INVENTORY_FILE)
+        item = next((item for item in inventory if item['item_name'] == decoded_item_name), None)
+        
+        if not item:
+            return jsonify({'error': 'Item not found'}), 404
+            
+        if int(item['quantity']) <= 0:
+            return jsonify({'error': 'Item out of stock'}), 400
+        
+        # Update inventory quantity
+        item['quantity'] = str(int(item['quantity']) - 1)
+        write_csv(INVENTORY_FILE, inventory, list(inventory[0].keys()))
+        
+        # Create new order
+        orders = read_csv(ORDERS_FILE)
+        new_order = {
+            'order_id': str(len(orders) + 1),
+            'buyer_name': sale_data.get('buyer_name', 'Direct Sale'),
+            'order_date': datetime.now().strftime('%Y-%m-%d'),
+            'items_purchased': item_name,
+            'total_cost': item['cost'],
+            'shipping_status': 'Pending',
+            'sales_price': str(sale_data['sale_price'])
+        }
+        
+        # Create financial record
+        financial_data = read_csv(FINANCIAL_FILE)
+        profit = float(sale_data['sale_price']) - float(item['cost'])
+        fees = float(item['cost']) * 0.1  # 10% fees
+        
+        financial_record = {
+            'transaction_id': str(len(financial_data) + 1),
+            'order_id': new_order['order_id'],
+            'transaction_date': new_order['order_date'],
+            'profit': str(profit),
+            'fees': str(fees),
+            'expenses': '0',
+            'total_sales': str(sale_data['sale_price'])
+        }
+        
+        # Save all records
+        orders.append(new_order)
+        financial_data.append(financial_record)
+        
+        write_csv(ORDERS_FILE, orders, ORDER_FIELDS)
+        write_csv(FINANCIAL_FILE, financial_data, FINANCIAL_FIELDS)
+        
+        return jsonify({
+            'message': 'Sale processed successfully',
+            'order': new_order
+        }), 201
+        
+    except Exception as e:
+        print(f"Error processing sale: {str(e)}")
+        return jsonify({'error': 'Failed to process sale'}), 500
+
 if __name__ == '__main__':
     app.run(debug=True)

@@ -1,2 +1,16 @@
-category,condition,cost,description,item_name,quantity,size
-T-shirt,Like New,12,1,Polo sirts,4,s
+item_name,category,size,condition,cost,quantity,description
+Tommy Hilfiger 1/4 zip Grade A,Sweaters,m-xl,Like New,10,3,
+Tommy Hilfiger 1/4 zip Grade B,Sweaters,m-xl,Used,5,2,
+Polo Ralph Lauren Long Sleeve ,T-shirts,m,Like New,9,4,
+Polo Ralph Lauren 1/4 zip Grade A,Sweaters,m-xl,Like New,20,4,
+Polo Ralph Lauren 1/4 zip grade B,Sweaters,m-xl,Used,10,4,
+Primative Heavy weigh jacket Red,Hoodies,m-xl,Like New,19,1,
+Barbour Harrignton Jacket,Sweaters,m,Like New,39,1,
+Polo Ralph Lauren sweater Grade B,Sweaters,m,Used,10,3,
+Patagonia lightweight jacket,Hoodies,m,Like New,19,2,
+Tommy Hilfiger sweater grade A,Sweaters,m,Like New,10,5,
+Carhartt zip through hoodie,Hoodies,m,Like New,6,2,
+Dickies heavy weight Jacket black/grey,Sweaters,m,Used,49,2,
+Dickies Black Jacket,Sweaters,m,Used,13,4,
+Tommy Hilfiger Denim Jacket ,Sweaters,m,Like New,14,0,
+Chap Ralph Lauren Grade B,Sweaters,m,Used,4,1,

@@ -1,3 +1,14 @@
 order_id,buyer_name,order_date,items_purchased,total_cost,shipping_status,sales_price
-5,Pending,2024-11-28,Polo sirts,12,Pending,12
-6,Pending,2024-11-28,Polo sirts,12,Pending,12
+1,Direct Sale,2024-12-05,Tommy Hilfiger 1/4 zip Grade A,10,Shipped,26
+2,Direct Sale,2024-12-05,Tommy Hilfiger 1/4 zip Grade A,10,Shipped,20
+3,Direct Sale,2024-12-05,Polo Ralph Lauren Long Sleeve ,9,Shipped,20
+4,Direct Sale,2024-12-05,Tommy Hilfiger 1/4 zip Grade B,5,Shipped,10
+5,Direct Sale,2024-12-05,Polo Ralph Lauren 1/4 zip grade B,10,Shipped,29
+6,Direct Sale,2024-12-05,Primative Heavy weigh jacket Red,19,Shipped,47.5
+7,Direct Sale,2024-12-05,Polo Ralph Lauren 1/4 zip Grade A,20,Shipped,44.1
+8,Direct Sale,2024-12-05,Barbour Harrignton Jacket,39,Shipped,45
+9,Direct Sale,2024-12-05,Polo Ralph Lauren sweater Grade B,10,Shipped,31
+11,Direct Sale,2024-12-06,Tommy Hilfiger Denim Jacket ,14,Pending,30
+12,Direct Sale,2024-12-06,Dickies Black Jacket,13,Pending,33
+13,Direct Sale,2024-12-06,Carhartt zip through hoodie,6,Pending,34
+13,Direct Sale,2024-12-06,Chap Ralph Lauren Grade B,4,Pending,11
